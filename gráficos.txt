@@ -1,0 +1,237 @@
+#totais
+totais_sexo <- svyby( ~ `ONE` , ~ `12SEXO` , analise_plan , svytotal )
+totais_cor <- svyby (~`ONE`, ~`17COR`, analise_plan, svytotal, na.rm = TRUE)
+totais_escolaridade <- svyby (~`ONE`, ~`46CURSO`, analise_plan, svytotal, na.rm = TRUE)
+totais_bolsafamilia <- svyby (~`ONE`, ~`90EM`, analise_plan, svytotal, na.rm = TRUE)
+totais_tranferencia <- svyby (~`ONE`, ~`91EM`, analise_plan, svytotal, na.rm = TRUE)
+totais_familiar <- svyby (~`ONE`, ~`140TIPO`, analise_plan, svytotal, na.rm = TRUE)
+totais_trabalho_consulta <- svyby (~`ONE`, ~`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+totais_ler <- svyby (~`ONE`, ~`40SABE`, analise_plan, svytotal, na.rm = TRUE)
+totais_filhos <- svyby (~`ONE`, ~`119TOTAL`, analise_plan, svytotal, na.rm = TRUE)
+
+#distribuições
+renda_geral <- svyquantile(~`78RENDIMENTO`, analise_plan, c(.1,.2,.3,.4,.5,.6,.7,.8,.9), na.rm = TRUE)
+renda_sexo_SM <- svyby (~`79RENDIMENTO`, ~`12SEXO`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+            keep.var=FALSE)
+renda_escolaridade_SM <- svyby (~`79RENDIMENTO`, ~`46CURSO`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+                        keep.var=FALSE)
+renda_bolsafamília_SM <- svyby (~`79RENDIMENTO`, ~`90EM`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+                        keep.var=FALSE)
+renda_tranf_SM <- svyby (~`79RENDIMENTO`, ~`91EM`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+                                keep.var=FALSE)
+renda_familiar_SM <- svyby (~`78RENDIMENTO`, ~`140TIPO`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+                         keep.var=FALSE)
+renda_trabalho <- svyby (~`78RENDIMENTO`, ~`68NESSE`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9), na.rm = TRUE,
+                            keep.var=FALSE)
+renda_ler_SM <- svyby (~`79RENDIMENTO`, ~`40SABE`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+                            keep.var=FALSE)
+
+
+#porq n da certo?
+#renda_cor_SM <- svyby (~`79RENDIMENTO`, ~`17COR`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+#                       keep.var=FALSE)
+
+
+#médias
+renda_cor_med_SM <- svyby(~`79RENDIMENTO`, ~`17COR`, analise_plan, svymean, na.rm = TRUE)
+renda_sexo_med_SM <- svyby(~`79RENDIMENTO`, ~`12SEXO`, analise_plan, svymean, na.rm = TRUE)
+renda_filhos_med_SM <- svyby(~`79RENDIMENTO`, ~`119TOTAL`, analise_plan, svymean, na.rm = TRUE)
+renda_trabalho_med <- svyby(~`78RENDIMENTO`, ~`68NESSE`, analise_plan, svymean, na.rm = TRUE)
+
+
+
+#estudo do mercado informal (4)
+#total
+totais_trabalho_sexo <- svyby (~`ONE`, ~`12SEXO`+`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+totais_trabalho_cor <- svyby (~`ONE`, ~`17COR`+`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+#maes solos (4,5)
+totais_trabalho_familiar <- svyby (~`ONE`, ~`140TIPO`+`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+
+#Ddistribuição
+renda_trabalho_sexo_SM <- svyby (~`79RENDIMENTO`, ~`12SEXO`+`68NESSE`, analise_plan, svyquantile, quantiles=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,.99), na.rm = TRUE,
+                            keep.var=FALSE)
+
+#médias
+renda_trabalho_cor_med_SM <- svyby(~`79RENDIMENTO`, ~`17COR`+`68NESSE`, analise_plan, svymean, na.rm = TRUE)
+renda_trabalho_familiar_med <- svyby(~`78RENDIMENTO`, ~`140TIPO`+`68NESSE`, analise_plan, svymean, na.rm = TRUE)
+
+----------------------------------------XX------------------------------------------------------------
+
+#gráficos
+
+formal_informal <- data.frame(c(550.00,	680,	780.000,	850,	1000,	1200,	1500.0000,	2000.000,	3000.000,
+                                200.00,	400,	500.000,	510,	600,	800,	959,	1200.000,	1800.000))
+
+
+names(formal_informal) <- c("renda")
+formal_informal$renda2 <- formal_informal$renda*(1.66487475847358)
+
+
+formal_informal$tipo <- c(rep("FORMAL",9),rep("INFORMAL", 9))
+formal_informal$quantil <- c(.1,.2,.3,.4,.5,.6,.7,.8,.9)
+
+library(ggplot2)
+library("showtext")
+font_add_google("Comfortaa", "Comfortaa")
+showtext.auto()
+
+
+png("formalxinformal.png", width = 1400, height = 1000)
+
+ggplot(formal_informal, aes(x=`quantil`, y=renda2)) + 
+  geom_histogram(stat = "identity", fill="#0033a0") +
+  facet_wrap(~tipo, ncol = 2) +
+  geom_text(aes(label=round(renda2,0), x=quantil, y=renda2),vjust=-0.4,angle=0,hjust=.6, size=6) +
+  theme_minimal(base_size = 20, base_family = "Comfortaa") +
+  theme(line=element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous("Quantil", breaks = c(.1,.2,.3,.4,.5,.6,.7,.8,.9)) +
+  scale_y_continuous("Remuneração", breaks = c(0,1000,2000,3000,4000,5000,6000)) +
+  labs(title = "Remuneração (em reais)") 
+
+dev.off()
+
+totais_trabalho<- svyby (~`ONE`, ~`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+totais_trabalho$nome <- c(1:7)
+
+totais_trabalho$se <- NULL
+totais_trabalho$`68NESSE` <- NULL
+
+totais_trabalho$ONE <- sort(totais_trabalho$ONE, decreasing = FALSE)
+
+png("total_trabalho.png", width = 1400, height = 1000)
+
+ggplot(totais_trabalho, aes(x=nome, y=ONE)) + 
+  geom_bar(stat = "identity", fill="#33cc99") +
+  geom_text(aes(label=round(ONE,0), x=nome, y=ONE),vjust=-0.4,angle=0,hjust=.5, size=6) +
+  theme_minimal(base_size = 20, base_family = "Comfortaa") +
+  theme(line=element_blank(),
+        panel.background = element_blank())+
+  coord_flip() +
+  labs(x = "", y = "População", title = "Nesse Trabalho Era:") +
+  scale_x_discrete(limit = c("Militar, Polícia Militar ou Corpo de Bombeiros", "Não Remunerado", "Empregador",
+                             "Funcionário Público", "Empregado sem Carteira de Trabalho Assinada", "Conta Própria",
+                             "Empregado com Carteira de Trabalho Assinada")) 
+
+dev.off()
+
+renda_trabalho_med <- svyby(~`78RENDIMENTO`, ~`68NESSE`, analise_plan, svymean, na.rm = TRUE)
+renda_trabalho_med$se <- NULL  
+
+
+
+média_trabalho <- data.frame(c(1523, 2407.859402 ,4054.765219,987.745576, 
+                               2250.808166, 4858.186303)*(1.66487475847358))
+names(média_trabalho) <- c("renda")
+média_trabalho$nome <- c("Empregado com carteira de trabalho assinada", 
+                         "Militar, policia militar ou corpo de bombeiros",
+                         "Empregado pelo regime jurídico dos funcionários públicos",
+                         "Empregado sem carteira de trabalho assinada",
+                         "Conta própria",
+                         "Empregador")
+
+library(dplyr)
+média_trabalho_2 <- média_trabalho %>% 
+  arrange(renda)
+
+
+png("media_trabalho_2.png", width = 1400, height = 1000)
+
+ggplot(média_trabalho_2, aes(x=reorder(nome, renda), y=renda)) + 
+  geom_bar(stat = "identity", fill="#33cc99") +
+  geom_text(aes(label=round(renda,0), x=nome, y=renda),vjust=-0.4,angle=0,hjust=.5, size=6) +
+  theme_minimal(base_size = 20, base_family = "Comfortaa") +
+  theme(line=element_blank(),
+        panel.background = element_blank())+
+  coord_flip() +
+  labs(x = "", y = "Remuneração (em reais)", title = "Remuneração Média por Trabalho")
+dev.off()
+
+renda_trabalho_familiar_med <- svyby(~`78RENDIMENTO`, ~`140TIPO`+`68NESSE`, analise_plan, svymean, na.rm = TRUE)
+renda_informal_média <- renda_trabalho_familiar_med%>%filter(`68NESSE`=="4")
+
+
+renda_informal_média_2 <- data.frame(c(1225.5535, 1325.5195, 1049.6062, 802.2792, 861.0380,
+                                         667.6204, 839.4174, 1023.3929)*(1.66487475847358))
+names(renda_informal_média_2) <- c("renda")
+
+renda_informal_média_2$`140TIPO` <- c("Casal sem filho(s)",
+"Casal sem filho(s) e com parente(s)",
+"Casal com filho(s)",
+"Casal com filho(s) e com parente(s)",
+"Mulher sem cônjuge com filho(s)",
+"Mulher sem cônjuge com filho(s) e com parente(s)",
+"Homem sem cônjuge com filho(s)",
+"Homem sem cônjuge com filho(s) e com parente(s)")
+
+png("renda_informal_média.png", width = 1400, height = 1000)
+
+ggplot(renda_informal_média_2, aes(x=reorder(`140TIPO`, renda), y=renda)) + 
+  geom_bar(stat = "identity", fill="#ff6666") +
+  geom_text(aes(label=round(renda,0), x=`140TIPO`, y=renda),vjust=-0.4,angle=0,hjust=.5, size=6) +
+  theme_minimal(base_size = 20, base_family = "Comfortaa") +
+  theme(line=element_blank(),
+        panel.background = element_blank())+
+  coord_flip() +
+  labs(x = "", y = "Remuneração (em reais)", title = "Remuneração Média no Mercado Informal")
+dev.off()
+
+renda_trabalho_cor_med <- svyby(~`78RENDIMENTO`, ~`17COR`+`68NESSE`+`140TIPO`, analise_plan, svymean, na.rm = TRUE)
+renda_informal_média_cor_fam <- renda_trabalho_cor_med%>%filter(`68NESSE`=="4" & `140TIPO` =="6" )
+
+totais_trabalho_familiar <- svyby (~`ONE`, ~`140TIPO`+`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+a <- totais_trabalho_familiar%>%filter(`68NESSE`=="4")
+
+a$`140TIPO` <- c("Casal sem filho(s)",
+                                      "Casal sem filho(s) e com parente(s)",
+                                      "Casal com filho(s)",
+                                      "Casal com filho(s) e com parente(s)",
+                                      "Mulher sem cônjuge com filho(s)",
+                                      "Mulher sem cônjuge com filho(s) e com parente(s)",
+                                      "Homem sem cônjuge com filho(s)",
+                                      "Homem sem cônjuge com filho(s) e com parente(s)",
+                                      "Outros")
+png("total_informal_média.png", width = 1400, height = 1000)
+
+ggplot(a, aes(x=reorder(`140TIPO`, ONE), y=ONE)) + 
+  geom_bar(stat = "identity", fill="#ff6666") +
+  geom_text(aes(label=round(ONE,0), x=`140TIPO`, y=ONE),vjust=-0.4,angle=0,hjust=.5, size=6) +
+  theme_minimal(base_size = 20, base_family = "Comfortaa") +
+  theme(line=element_blank(),
+        panel.background = element_blank())+
+  coord_flip() +
+  labs(x = "", y = "População", title = "Composição Familiar no Mercado Informal")
+dev.off()
+
+
+renda_domicilio_familiar_med <- svyby(~`84RENDIMENTO`, ~`140TIPO`+`68NESSE`, analise_plan, svymean, na.rm = TRUE)
+renda_dom_informal_média <- renda_domicilio_familiar_med%>%filter(`68NESSE`=="4")
+
+ab <- data.frame(c(1684.3674, 904.5795, 926.4150, 631.3581, 898.3028, 562.2121, 864.1894,
+                   765.4424)*(1.66487475847358))
+names(ab) <- c("renda")
+
+ab$`140TIPO` <- c("Casal sem filho(s)",
+                                      "Casal sem filho(s) e com parente(s)",
+                                      "Casal com filho(s)",
+                                      "Casal com filho(s) e com parente(s)",
+                                      "Mulher sem cônjuge com filho(s)",
+                                      "Mulher sem cônjuge com filho(s) e com parente(s)",
+                                      "Homem sem cônjuge com filho(s)",
+                                      "Homem sem cônjuge com filho(s) e com parente(s)")
+
+
+
+png("renda_domiciliar_média.png", width = 1400, height = 1000)
+
+ggplot(ab, aes(x=reorder(`140TIPO`, renda), y=renda)) + 
+  geom_bar(stat = "identity", fill="#ff6666") +
+  geom_text(aes(label=round(renda,0), x=`140TIPO`, y=renda),vjust=-0.4,angle=0,hjust=.5, size=6) +
+  theme_minimal(base_size = 20, base_family = "Comfortaa") +
+  theme(line=element_blank(),
+        panel.background = element_blank())+
+  coord_flip() +
+  labs(x = "", y = "Renda Domiciliar Per Capita (em reais)", title = "Trabalhadores Informais")
+dev.off()
+                    
+

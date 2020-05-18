@@ -1,0 +1,34 @@
+a <- svyby (~`ONE`, ~`132Rendimento`+`140TIPO`+`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+
+A1 <- a%>%filter(`68NESSE`=="4" & `132Rendimento` <= "255")
+sum(A1$ONE)/sum(b1$ONE)
+
+A2 <- A1%>%filter(`140TIPO` == "5" | `140TIPO` == "6")
+sum(A2$ONE)
+sum(A2$ONE)*1200
+sum(A1$ONE) - sum(A2$ONE)
+(sum(A1$ONE) - sum(A2$ONE))*600
+sum(A1$ONE)
+
+(sum(A2$ONE)*1200) + ((sum(A1$ONE) - sum(A2$ONE))*600)
+
+b <- svyby (~`ONE`, ~`78RENDIMENTO`+`140TIPO`+`68NESSE`, analise_plan, svytotal, na.rm = TRUE)
+b1 <- b%>%filter(`68NESSE`=="4")
+
+
+b2 <- b1%>%filter(`140TIPO` == "5" | `140TIPO` == "6")
+
+(sum(b2$`78RENDIMENTO`*b2$ONE*(1.66487475847358))) - (sum(b2$ONE)*1200)
+sum(b2$ONE)
+(sum(b2$`78RENDIMENTO`*b2$ONE*(1.66487475847358))) 
+
+(sum(b1$`78RENDIMENTO`*b1$ONE*(1.66487475847358))) - (sum(b2$`78RENDIMENTO`*b2$ONE*(1.66487475847358))) -
+(sum(b1$ONE) - sum(b2$ONE))*600
+
+(sum(b1$`78RENDIMENTO`*b1$ONE*(1.66487475847358)))
+
+sum(b1$ONE)
+
+((sum(b2$`78RENDIMENTO`*b2$ONE*(1.66487475847358))) - (sum(b2$ONE)*1200)) + 
+  ((sum(b1$`78RENDIMENTO`*b1$ONE*(1.66487475847358))) - (sum(b2$`78RENDIMENTO`*b2$ONE*(1.66487475847358))) -
+  (sum(b1$ONE) - sum(b2$ONE))*600)

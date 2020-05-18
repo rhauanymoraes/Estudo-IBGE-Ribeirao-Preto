@@ -1,0 +1,62 @@
+#adicionando os pesos da amostra
+#calculando as distribuições de renda
+
+analise <- read.table("analise.txt", header = TRUE, sep = ",")
+
+analise$`X2ÁREA` <- as.character(analise$`X2ÁREA`)
+analise$`X1CÓDIGO` <- as.character(analise$`X1CÓDIGO`)
+
+names(analise) <- c("1CÓDIGO", 
+                                   "2ÁREA", 
+                                   "3CONTROLE",  
+                                   "6CÓDIGO", 
+                                   "7CÓDIGO", 
+                                   "9SITUAÇÃO", 
+                                   "12SEXO", 
+                                   "13VARIÁVEL", 
+                                   "17COR", 
+                                   "40SABE", 
+                                   "46CURSO", 
+                                   "48ESPÉCIE", 
+                                   "49NÍVEL", 
+                                   "60ESTADO", 
+                                   "65QUANTOS", 
+                                   "66OCUPAÇÃO", 
+                                   "67ATIVIDADE", 
+                                   "68NESSE", 
+                                   "71NO", 
+                                   "72VALOR", 
+                                   "73RENDIMENTO", 
+                                   "74RENDIMENTO", 
+                                   "75NOS", 
+                                   "76VALOR", 
+                                   "77RENDIMENTO", 
+                                   "78RENDIMENTO", 
+                                   "79RENDIMENTO", 
+                                   "80RENDIMENTO", 
+                                   "81RENDIMENTO", 
+                                   "82RENDIMENTO", 
+                                   "83RENDIMENTO", 
+                                   "84RENDIMENTO", 
+                                   "85RENDIMENTO", 
+                                   "86NO", 
+                                   "90EM", 
+                                   "91EM", 
+                                   "99QUAL", 
+                                   "119TOTAL", 
+                                   "126SUBGRUPO", 
+                                   "131Número", 
+                                   "132Rendimento", 
+                                   "133Rendimento",
+                                   "140TIPO",
+                    "4PESO",
+                    "ONE",
+                    "Npespop")
+
+library(survey)
+
+analise_plan <- svydesign(data= analise,
+                          ids = ~`3CONTROLE`,
+                          strata = ~`2ÁREA`,
+                          fpc = ~`Npespop`,
+                          weights = ~`4PESO`)

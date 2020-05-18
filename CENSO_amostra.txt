@@ -1,0 +1,262 @@
+setwd("C:/Users/rhauany.moraes/Desktop/R pasta")
+
+data_pessoas <- read.fwf(file = 'Amostra_Pessoas_35_Outras.txt', widths = c(7,13,8,16,1,2,3,2,	1,	2,	2,	1,	3,	3,	2,
+                                                                            1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	4,
+                                                                            1,	7,	7,	3,	3,	1,	7,	7,	7,	1,	7,
+                                                                            7,	7,	1,	1,	2,	2,	1,	1,	2,	1,	1,	1,
+                                                                            3,	3,	3,	1,	7,	7,	7,	1,	2,	1,	1,	1,
+                                                                            1,	1,	1,	1,	4,	5,	1,	1,	1,	1,	6,	6,
+                                                                            6,1,	6,	9,	7,	9,	7,	9,	7,	10,	8,	9,
+                                                                            3,	1,	1,	1,	1,	1,	1,	6,	1,	7,	7,	7,
+                                                                            1,	1,	1,	2,	2,	2,	1,	2,	2,	2,	1,	3,
+                                                                            1,	1,	1,	2,	4,	1,	2,	2,	2,	2,	1,	2,
+                                                                            1,	1,	1,	1,	1,	3,	1,	2,	2,	2,	8,	9,
+                                                                            4,	5, 4, 1)
+                         ,skip = 1752084, n = 30911)
+-------------------------------------------------------------------------x----------------------------
+
+setwd("C:/Users/rhauany.moraes/Desktop/R pasta")
+
+data_pessoas <- read.table("data_pessoas.txt", sep = ",", header = TRUE)
+
+names(data_pessoas) <- c("1CÓDIGO", 
+                         "2ÁREA", 
+                         "3CONTROLE", 
+                         "4PESO", 
+                         "5REGIÃO", 
+                         "6CÓDIGO", 
+                         "7CÓDIGO", 
+                         "8CÓDIGO", 
+                         "9SITUAÇÃO", 
+                         "10RELAÇÃO", 
+                         "11ORDEM", 
+                         "12SEXO", 
+                         "13VARIÁVEL", 
+                         "14VARIÁVEL", 
+                         "15VARIÁVEL", 
+                         "16FORMA", 
+                         "17COR", 
+                         "18REGISTRO", 
+                         "19DIFICULDADE", 
+                         "20DIFICULDADE", 
+                         "21DIFICULDADE", 
+                         "22DEFICIÊNCIA", 
+                         "23NASCEU", 
+                         "24NASCEU", 
+                         "25NACIONALIDADE:", 
+                         "26ANO", 
+                         "27UF", 
+                         "28UNIDADE", 
+                         "29QUAL", 
+                         "30TEMPO", 
+                         "31TEMPO", 
+                         "32UNIDADE", 
+                         "33UF", 
+                         "34MUNICÍPIO", 
+                         "35PAÍS", 
+                         "36RESIDÊNCIA", 
+                         "37UF", 
+                         "38MUNICÍPIO", 
+                         "39PAÍS", 
+                         "40SABE", 
+                         "41FREQUENTA", 
+                         "42CURSO", 
+                         "43SÉRIE", 
+                         "44SÉRIE", 
+                         "45CONCLUSÃO", 
+                         "46CURSO", 
+                         "47CONCLUSÃO", 
+                         "48ESPÉCIE", 
+                         "49NÍVEL", 
+                         "50CURSO", 
+                         "51CURSO", 
+                         "52CURSO", 
+                         "53MUNICÍPIO", 
+                         "54UF", 
+                         "55MUNICÍPIO", 
+                         "56PAÍS", 
+                         "57VIVE", 
+                         "58NÚMERO", 
+                         "59NATUREZA", 
+                         "60ESTADO", 
+                         "61NA", 
+                         "62NA", 
+                         "63NA", 
+                         "64NA", 
+                         "65QUANTOS", 
+                         "66OCUPAÇÃO", 
+                         "67ATIVIDADE", 
+                         "68NESSE", 
+                         "69QUANTAS", 
+                         "70ERA", 
+                         "71NO", 
+                         "72VALOR", 
+                         "73RENDIMENTO", 
+                         "74RENDIMENTO", 
+                         "75NOS", 
+                         "76VALOR", 
+                         "77RENDIMENTO", 
+                         "78RENDIMENTO", 
+                         "79RENDIMENTO", 
+                         "80RENDIMENTO", 
+                         "81RENDIMENTO", 
+                         "82RENDIMENTO", 
+                         "83RENDIMENTO", 
+                         "84RENDIMENTO", 
+                         "85RENDIMENTO", 
+                         "86NO", 
+                         "87NO", 
+                         "88SE", 
+                         "89EM", 
+                         "90EM", 
+                         "91EM", 
+                         "92EM", 
+                         "93EM", 
+                         "94EM", 
+                         "95EM", 
+                         "96EM", 
+                         "97EM", 
+                         "98RETORNA", 
+                         "99QUAL", 
+                         "100QUANTOS", 
+                         "101QUANTOS", 
+                         "102QUANTAS", 
+                         "103TOTAL", 
+                         "104DOS", 
+                         "105DOS", 
+                         "106DAS", 
+                         "107TOTAL", 
+                         "108QUAL", 
+                         "109IDADE", 
+                         "110EXISTÊNCIA", 
+                         "111ESTE(A)", 
+                         "112QUAL", 
+                         "113QUAL", 
+                         "114QUAL", 
+                         "115QUANTOS", 
+                         "116QUANTOS", 
+                         "117QUANTOS", 
+                         "118QUANTOS", 
+                         "119TOTAL", 
+                         "120ASSINALE", 
+                         "121NÚMERO", 
+                         "122CONDIÇÃO", 
+                         "123CONDIÇÃO", 
+                         "124SITUAÇÃO", 
+                         "125POSIÇÃO", 
+                         "126SUBGRUPO", 
+                         "127Qual", 
+                         "128TEM", 
+                         "129Número", 
+                         "130NÚMERO", 
+                         "131Número", 
+                         "132Rendimento", 
+                         "133Rendimento", 
+                         "134Qual", 
+                         "135Qual",
+                         "135NADA",
+                         "140TIPO") 
+
+data_pessoas$`2ÁREA` <- as.character(data_pessoas$`2ÁREA`)
+data_pessoas$`1CÓDIGO` <- as.character(data_pessoas$`1CÓDIGO`)
+
+write.table(data_pessoas, "data_pessoas.txt", sep = ",")
+
+library(dplyr)
+analise <- data_pessoas %>% select("1CÓDIGO", 
+                                   "2ÁREA", 
+                                   "3CONTROLE",  
+                                   "6CÓDIGO", 
+                                   "7CÓDIGO", 
+                                   "9SITUAÇÃO", 
+                                   "12SEXO", 
+                                   "13VARIÁVEL", 
+                                   "17COR", 
+                                   "40SABE", 
+                                   "46CURSO", 
+                                   "48ESPÉCIE", 
+                                   "49NÍVEL", 
+                                   "60ESTADO", 
+                                   "65QUANTOS", 
+                                   "66OCUPAÇÃO", 
+                                   "67ATIVIDADE", 
+                                   "68NESSE", 
+                                   "71NO", 
+                                   "72VALOR", 
+                                   "73RENDIMENTO", 
+                                   "74RENDIMENTO", 
+                                   "75NOS", 
+                                   "76VALOR", 
+                                   "77RENDIMENTO", 
+                                   "78RENDIMENTO", 
+                                   "79RENDIMENTO", 
+                                   "80RENDIMENTO", 
+                                   "81RENDIMENTO", 
+                                   "82RENDIMENTO", 
+                                   "83RENDIMENTO", 
+                                   "84RENDIMENTO", 
+                                   "85RENDIMENTO", 
+                                   "86NO", 
+                                   "90EM", 
+                                   "91EM", 
+                                   "99QUAL", 
+                                   "119TOTAL", 
+                                   "126SUBGRUPO", 
+                                   "131Número", 
+                                   "132Rendimento", 
+                                   "133Rendimento",
+                                   "140TIPO")
+
+
+analise$`74RENDIMENTO` <- analise$`74RENDIMENTO`/100 
+analise$`77RENDIMENTO` <- analise$`77RENDIMENTO`/100000
+analise$`79RENDIMENTO` <- analise$`79RENDIMENTO`/100000
+analise$`81RENDIMENTO` <- analise$`81RENDIMENTO`/100000
+analise$`83RENDIMENTO` <- analise$`83RENDIMENTO`/100000
+analise$`84RENDIMENTO` <- analise$`84RENDIMENTO`/100
+analise$`85RENDIMENTO` <- analise$`85RENDIMENTO`/100000
+analise$`132Rendimento` <- analise$`132Rendimento`/100
+analise$`133Rendimento` <- analise$`133Rendimento`/100000
+
+peso_amostral <- read.fwf("peso_amostral.txt", widths = c(16))
+
+analise$`4PESO` <- peso_amostral$V1
+
+ONE <- data.frame(rep(1,30911))
+
+analise$`ONE` <- ONE$rep.1..30911.
+
+write.table(analise, "analise.txt", sep = ",")
+
+-----------------------------------------------------------------------------X---------------------------------
+
+#para ler censo pessoas <------ não deu certo
+
+setwd('C:/Users/rhauany.moraes/Desktop/R pasta')
+
+library('microdadosBrasil')
+
+censo_dic<- get_import_dictionary(dataset = "CENSO",i = 2010, ft = "pessoas")
+
+d <- read_CENSO(ft = "pessoas", 
+                i = "2010", 
+                file = 'Amostra_Pessoas_35_Outras.txt',
+                source_file_mark = TRUE,
+                vars_subset = c("V0001"),
+                UF = "SP")
+----------------------------------------------------------------------------X--------------------------------
+#para ler censo domicílio
+
+setwd('C:/Users/rhauany.moraes/Desktop/R pasta')
+
+library('microdadosBrasil')
+
+censo_dic<- get_import_dictionary(dataset = "CENSO",i = 2010, ft = "pessoas")
+
+d <- read_CENSO(ft = "domicilios", 
+                i = "2010", 
+                file = 'Amostra_Domicilios_35_Outras.txt',
+                source_file_mark = TRUE,
+                UF = "SP")
+
+d_rp <- subset(d, V0002 == 43402)
